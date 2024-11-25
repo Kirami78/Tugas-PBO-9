@@ -1,0 +1,59 @@
+<div id="content"> </div>
+
+<script>
+  const pbo = {
+    model: {
+      mahasiswa: [
+        { username: 'ratih', pin: 'ratih123' },
+        { username: 'afwanda', pin: 'afwanda123' },
+        { username: 'shandy', pin: 'sandi123' },
+      ],
+    },
+    view: {
+      signform: function () {
+        return `
+          <div>
+            <label>Username:</label>
+            <input type="text" id="username" /><br />
+            <label>PIN:</label>
+            <input type="password" id="pin" /><br />
+            <button id="login">Login</button>
+            <button id="cancel">Cancel</button>
+          </div>
+        `;
+      },
+    },
+    controller: {
+      signin: function () {
+        const username = document.getElementById('username').value;
+        const pin = document.getElementById('pin').value;
+
+        const user = pbo.model.mahasiswa.find(
+          (m) => m.username === username && m.pin === pin
+        );
+
+        if (user) {
+          alert('Login berhasil!');
+        } else {
+          alert('Username atau PIN salah.');
+        }
+      },
+      signout: function () {
+        document.getElementById('username').value = '';
+        document.getElementById('pin').value = '';
+      },
+      signform: function () {
+        document.getElementById('content').innerHTML = pbo.view.signform();
+
+        // Tambahkan event listener untuk tombol login
+        document.getElementById('login').addEventListener('click', pbo.controller.signin);
+
+        // Tambahkan event listener untuk tombol cancel
+        document.getElementById('cancel').addEventListener('click', pbo.controller.signout);
+      },
+    },
+  };
+
+  // Menampilkan form login saat halaman dimuat
+  pbo.controller.signform();
+</script>
